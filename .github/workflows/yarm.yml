@@ -7,26 +7,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Set Node.js 16.x
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: 16.x
-
+          node-version: '16.x'
+          cache: 'yarn']
       - name: Run install
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: install # will run `yarn install` command
+      - run: yarn install --frozen-lockfile # optional, --immutable
+      - name: Test the app
+      - run: yarn test
+      - name: Run lint
+      - run: yarn lint
       - name: Build production
         uses: borales/actions-yarn@v4
         with:
           cmd: build # will run `yarn build` command
-      - name: Test the app
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: test # will run `yarn test` command
-      - name: Run Lint
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: lint # will run `yarn lint` command
 
